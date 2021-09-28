@@ -13,11 +13,10 @@ public class DataLoader implements ApplicationRunner {
 
     private UserRepository userRepository;
 
+    @Autowired
     public DataLoader(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    @Autowired
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
