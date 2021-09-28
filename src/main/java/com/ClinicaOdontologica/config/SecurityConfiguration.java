@@ -1,5 +1,6 @@
 package com.ClinicaOdontologica.config;
 
+import com.ClinicaOdontologica.persistence.entities.login.UserRoles;
 import com.ClinicaOdontologica.service.impl.login.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,16 +28,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //http.formLogin().disable();
 
-
-//                .csrf().disable()
-//                .authorizeRequests()
-//                    .antMatchers("/turnos/**").hasAnyAuthority(UserRoles.USER.name(), UserRoles.ADMIN.name())
-//                    .antMatchers("/odontologos/**", "/paciente/**").hasAnyAuthority(UserRoles.ADMIN.name())
-//                .anyRequest()
-//                .authenticated()
-//                .and().formLogin().permitAll()
-//                .and().logout().permitAll()
-//                .and().exceptionHandling().accessDeniedPage("/403");
+            http
+                .csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/turnos/**").hasAnyAuthority(UserRoles.USER.name(), UserRoles.ADMIN.name())
+                    .antMatchers("/odontologos/**", "/paciente/**").hasAnyAuthority(UserRoles.ADMIN.name())
+                .anyRequest()
+                .authenticated()
+                .and().formLogin().permitAll()
+                .and().logout().permitAll()
+                .and().exceptionHandling().accessDeniedPage("/403");
     }
 
     @Override

@@ -25,7 +25,7 @@ public class DataLoader implements ApplicationRunner {
         String password = passwordEncoder.encode("password");
         String password2 = passwordEncoder.encode("password2");
 
-        //userRepository.save(new User("admin", "adminTester", "admin", "admin@gmail.com", password2, UserRoles.ADMIN));
-        userRepository.save(new User("user", "tester", "user", "user@gmail.com", password, UserRoles.USER));
+        userRepository.save(new User("admin", "admin", "admin", "admin@gmail.com", password2, UserRoles.ADMIN));
+        userRepository.save(new User("user", "user", "user", "user@gmail.com", password, UserRoles.USER));
     }
 }
