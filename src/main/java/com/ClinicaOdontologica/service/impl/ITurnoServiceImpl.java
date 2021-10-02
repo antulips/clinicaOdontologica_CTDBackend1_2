@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ITurnoServiceImpl implements ITurnoService {
@@ -107,6 +109,37 @@ public class ITurnoServiceImpl implements ITurnoService {
         return response;
     }
 
+    @Override
+    public Collection<TurnoDTO> getTurnosForOneWeek(LocalDate fromDate) {
+        Set<TurnoDTO> response = new HashSet();
+        LocalDate toDate = fromDate.plusDays(7);
+
+        List<Turno> turnoList = turnoRepository.findAll()
+                .stream().filter(turno ->
+                        (turno.getFecha().isAfter(fromDate.minusDays(1)) && turno.getFecha().isBefore(toDate.plusDays(1))))
+                .collect(Collectors.toList());
+
+        for (Turno turno: turnoList) {
+            response.add(mapper.convertValue(turno, TurnoDTO.class));
+        }
+        return response;
+    }
+
+    @Override
+    public Collection<TurnoDTO> getTurnosForPeriod(LocalDate from, LocalDate to) {
+        Set<TurnoDTO> response = new HashSet();
+
+        List<Turno> turnoList = turnoRepository.findAll()
+                .stream().filter(turno ->
+                        (turno.getFecha().isAfter(from.minusDays(1)) && turno.getFecha().isBefore(to.plusDays(1))))
+                .collect(Collectors.toList());
+
+        for (Turno turno: turnoList) {
+            response.add(mapper.convertValue(turno, TurnoDTO.class));
+        }
+        return response;
+    }
+
     private Turno saveTurno(TurnoDTO turno) {
         Turno newTurno = mapper.convertValue(turno, Turno.class);
         return turnoRepository.save(newTurno);
@@ -115,4 +148,6 @@ public class ITurnoServiceImpl implements ITurnoService {
     private boolean validatePacienteAndOdontologo(Long idPaciente, Long idOdontologo) throws ResourceNotFoundException {
         return pacienteService.readById(idPaciente).isPresent() && odontologoService.readById(idOdontologo).isPresent();
     }
+
+
 }

@@ -13,6 +13,5 @@ public interface ICRUDService<T> {
     Optional<T> readById(Long id) throws ResourceNotFoundException;
     T update(T t) throws ResourceNotFoundException, ServiceException;
     String delete(Long id) throws ResourceNotFoundException;
-
     Collection<T> getAll();
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -83,16 +84,42 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
         return ResponseEntity.ok(listaDeTurnos);
     }
 
-    /*@GetMapping("/proximos")
-    public ResponseEntity<List<TurnoDto>> buscarTurnosDesde(
-            @RequestParam Integer dia,
-            @RequestParam Integer mes,
-            @RequestParam Integer anio,
-            @RequestParam(defaultValue = "0") Integer hora,
-            @RequestParam(defaultValue = "0") Integer minuto,
-            @RequestParam(defaultValue = "7") Integer cantidadDias) {
-        LocalDateTime desde = LocalDateTime.of(anio, mes, dia, hora, minuto);
-        List<TurnoDto> turnos = turnoService.consultarProximosTurnos(desde, cantidadDias);
-        return ResponseEntity.ok(turnos);
-    }*/
+    @GetMapping("/weekly")
+    public ResponseEntity<?> getAllForAWeek(
+            @RequestParam Integer day,
+            @RequestParam Integer month,
+            @RequestParam Integer year
+    ) {
+        LocalDate fromDate = LocalDate.of(year, month, day);
+
+        logger.info("Buscando los turnos para la semana del " + fromDate + ".");
+
+        Collection<TurnoDTO> listaDeTurnos = turnoService.getTurnosForOneWeek(fromDate);
+
+        logger.info(String.format("Se encontraron %s turnos.", listaDeTurnos.size()));
+
+        return ResponseEntity.ok(listaDeTurnos);
+    }
+
+    @GetMapping("/period")
+    public ResponseEntity<?> getAllFromTo(
+            @RequestParam Integer dayFrom,
+            @RequestParam Integer monthFrom,
+            @RequestParam Integer yearFrom,
+            @RequestParam Integer dayTo,
+            @RequestParam Integer monthTo,
+            @RequestParam Integer yearTo
+    ) {
+        LocalDate fromDate = LocalDate.of(yearFrom, monthFrom, dayFrom);
+        LocalDate toDate = LocalDate.of(yearTo, monthTo, dayTo);
+
+        logger.info("Buscando los turnos para la semana del " + fromDate + ".");
+
+        Collection<TurnoDTO> listaDeTurnos = turnoService.getTurnosForPeriod(fromDate, toDate);
+
+        logger.info(String.format("Se encontraron %s turnos.", listaDeTurnos.size()));
+
+        return ResponseEntity.ok(listaDeTurnos);
+    }
+
 }

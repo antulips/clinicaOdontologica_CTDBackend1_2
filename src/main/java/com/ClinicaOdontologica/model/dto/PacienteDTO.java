@@ -38,7 +38,6 @@ public class PacienteDTO {
                 "\n\tD.U.: '" + dni + "'" +
                 "\n\tNombre: '" + nombre + "'" +
                 "\n\tApellido: '" + apellido + "'" +
-                "\n\tFecha de Ingreso: '" + fechaIngreso + "'" +
-                "\n\tDomicilio: '" + domicilio.toString() + "' \n";
+                "\n\tFecha de Ingreso: '" + fechaIngreso +  "' \n";
     }
 }
