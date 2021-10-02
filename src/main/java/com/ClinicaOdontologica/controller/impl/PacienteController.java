@@ -1,5 +1,6 @@
-package com.ClinicaOdontologica.controller;
+package com.ClinicaOdontologica.controller.impl;
 
+import com.ClinicaOdontologica.controller.ICRUDController;
 import com.ClinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.PacienteDTO;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/pacientes")
-public class PacienteController implements ICRUDController<PacienteDTO>{
+public class PacienteController implements ICRUDController<PacienteDTO> {
 
     private final static Logger logger = Logger.getLogger(PacienteController.class);
 
@@ -42,7 +43,7 @@ public class PacienteController implements ICRUDController<PacienteDTO>{
 
         Optional<PacienteDTO> response = pacienteService.readById(id);
 
-        logger.info("Se encontró el paciente:\n" + response.get().toString());
+        logger.info("Se encontró el paciente:\n" + response.get());
 
         return ResponseEntity.ok(response.get());
     }
@@ -68,7 +69,7 @@ public class PacienteController implements ICRUDController<PacienteDTO>{
 
         logger.info("Se eliminó el paciente:\n" + response.get().getId());
 
-        return ResponseEntity.ok(String.format(pacienteService.delete(id)));
+        return ResponseEntity.ok(pacienteService.delete(id));
 
     }
 

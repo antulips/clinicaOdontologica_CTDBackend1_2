@@ -1,5 +1,6 @@
-package com.ClinicaOdontologica.controller;
+package com.ClinicaOdontologica.controller.impl;
 
+import com.ClinicaOdontologica.controller.ICRUDController;
 import com.ClinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.TurnoDTO;
@@ -41,7 +42,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
 
         Optional<TurnoDTO> response = turnoService.readById(id);
 
-        logger.info("Se encontró el turno:\n" + response.get().toString());
+        logger.info("Se encontró el turno:\n" + response.get());
 
         return ResponseEntity.ok(response.get());
     }
@@ -67,7 +68,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
 
         logger.info("Se eliminó el turno:\n" + response.get().getId());
 
-        return ResponseEntity.ok(String.format(turnoService.delete(id)));
+        return ResponseEntity.ok(turnoService.delete(id));
     }
 
     @Override
@@ -81,4 +82,17 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
 
         return ResponseEntity.ok(listaDeTurnos);
     }
+
+    /*@GetMapping("/proximos")
+    public ResponseEntity<List<TurnoDto>> buscarTurnosDesde(
+            @RequestParam Integer dia,
+            @RequestParam Integer mes,
+            @RequestParam Integer anio,
+            @RequestParam(defaultValue = "0") Integer hora,
+            @RequestParam(defaultValue = "0") Integer minuto,
+            @RequestParam(defaultValue = "7") Integer cantidadDias) {
+        LocalDateTime desde = LocalDateTime.of(anio, mes, dia, hora, minuto);
+        List<TurnoDto> turnos = turnoService.consultarProximosTurnos(desde, cantidadDias);
+        return ResponseEntity.ok(turnos);
+    }*/
 }

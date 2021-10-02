@@ -1,5 +1,7 @@
-package com.ClinicaOdontologica.persistence.entities.login;
+package com.ClinicaOdontologica.config;
 
+import com.ClinicaOdontologica.persistence.entities.login.User;
+import com.ClinicaOdontologica.persistence.entities.login.UserRoles;
 import com.ClinicaOdontologica.persistence.repository.login.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

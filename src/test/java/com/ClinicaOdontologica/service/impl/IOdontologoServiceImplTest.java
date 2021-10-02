@@ -56,7 +56,7 @@ public class IOdontologoServiceImplTest {
         Object creado = odontologoService.create(o);
 
         //ENTONCES
-        assertTrue(o.equals(creado));
+        assertEquals(creado, o);
     }
 
     @Test
@@ -65,9 +65,7 @@ public class IOdontologoServiceImplTest {
         OdontologoDTO noO = null;
 
         //ENTONCES > CUANDO
-        assertThrows(ServiceException.class, () -> {
-            odontologoService.create(noO);
-        });
+        assertThrows(ServiceException.class, () -> odontologoService.create(noO));
     }
 
     @Test
@@ -78,7 +76,7 @@ public class IOdontologoServiceImplTest {
         OdontologoDTO respuesta = odontologoService.readById(o2.getId()).get();
 
         //ENTONCES
-        assertTrue(o2.equals(respuesta));
+        assertEquals(respuesta, o2);
     }
 
     @Test
@@ -100,9 +98,7 @@ public class IOdontologoServiceImplTest {
         o.setNombre("Doc Doc");
 
         //ENTONCES > CUANDO
-        assertThrows(ServiceException.class, () -> {
-            odontologoService.update(o);
-        });
+        assertThrows(ServiceException.class, () -> odontologoService.update(o));
     }
 
     @Test
@@ -114,9 +110,7 @@ public class IOdontologoServiceImplTest {
         odontologoService.delete(idOdontologoParaBorrar);
 
         //ENTONCES
-        assertThrows(ResourceNotFoundException.class, () -> {
-            odontologoService.readById(idOdontologoParaBorrar);
-        });
+        assertThrows(ResourceNotFoundException.class, () -> odontologoService.readById(idOdontologoParaBorrar));
     }
 
     @Test
@@ -128,9 +122,8 @@ public class IOdontologoServiceImplTest {
 
         //ENTONCES
         //assertFalse(odontologos.isEmpty());
-        assertTrue(odontologos.size() == 4);
+        assertEquals(4, odontologos.size());
 
     }
-
 
 }

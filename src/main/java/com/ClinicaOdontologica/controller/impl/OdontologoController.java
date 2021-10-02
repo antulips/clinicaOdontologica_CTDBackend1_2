@@ -1,5 +1,6 @@
-package com.ClinicaOdontologica.controller;
+package com.ClinicaOdontologica.controller.impl;
 
+import com.ClinicaOdontologica.controller.ICRUDController;
 import com.ClinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.OdontologoDTO;
@@ -31,13 +32,6 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> odontologo = Optional.of(odontologoService.create(newOdondologo));
 
-                   /*CÓDIGO PARA EL TURNO CONTROLLER
-            if(!odontologo.equals(Messages.ERROR_ODONTOLOGO_PACIENTE_NO_EXISTEN)) {
-                return ResponseEntity.ok(String.format(Messages.TURNO_CREADO_CON_EXITO, odontologo));
-            }else{
-                response = ResponseEntity.badRequest().body(Messages.ERROR_AL_CREAR_TURNO + " " + Messages.ERROR_ODONTOLOGO_PACIENTE_NO_EXISTEN);
-            }*/
-
         logger.info(String.format(Messages.CREADO_CON_EXITO, "odontólogo", odontologo.get().getId()));
 
         return ResponseEntity.ok(String.format(Messages.CREADO_CON_EXITO, "odontólogo", odontologo.get().getId()));
@@ -50,7 +44,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> response = odontologoService.readById(id);
 
-        logger.info("Se encontró el odontólogo:\n" + response.get().toString());
+        logger.info("Se encontró el odontólogo:\n" + response.get());
 
         return ResponseEntity.ok(response.get());
     }
@@ -75,7 +69,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> response = odontologoService.readById(id);
 
-        logger.info("Se eliminó el odontólogo:\n" + response.get().toString());
+        logger.info("Se eliminó el odontólogo:\n" + response.get());
 
         return ResponseEntity.ok(odontologoService.delete(id));
     }

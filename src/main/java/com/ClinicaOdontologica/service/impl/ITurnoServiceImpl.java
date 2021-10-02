@@ -37,7 +37,7 @@ public class ITurnoServiceImpl implements ITurnoService {
             turno.setPaciente(newTurno.getPaciente());
             turno.setOdontologo(newTurno.getOdontologo());
         } else {
-            throw new ServiceException(String.format(Messages.ERROR_CAUSA_DESCONOCIDA));
+            throw new ServiceException(Messages.ERROR_CAUSA_DESCONOCIDA);
         }
         return turno;
     }
@@ -65,12 +65,21 @@ public class ITurnoServiceImpl implements ITurnoService {
             throw new ResourceNotFoundException("No se puede actualizar. " + String.format(Messages.ERROR_NO_EXISTE, "turno", turno.getId()));
         }
 
-        //Hago que deje de ser un Optional y lo convierto en DTO para no trabajar con Entity desde el controller
         TurnoDTO newTurno = mapper.convertValue(response.get(), TurnoDTO.class);
 
-       // newPaciente.setApellido(Optional.ofNullable(turno.getApellido()).orElse(newPaciente.getApellido()));
-       // newPaciente.setDni(Optional.ofNullable(turno.getDni()).orElse(newPaciente.getDni()));
-       // newPaciente.setFechaIngreso(Optional.ofNullable(turno.getFechaIngreso()).orElse(newPaciente.getFechaIngreso()));
+        if (turno.getFecha() != null) {
+            newTurno.setFecha(turno.getFecha());
+        }
+        if (turno.getHora() != null) {
+            newTurno.setHora(turno.getHora());
+        }
+
+        if (turno.getPaciente() != null) {
+            newTurno.setPaciente(turno.getPaciente());
+        }
+        if (turno.getOdontologo() != null) {
+            newTurno.setOdontologo(turno.getOdontologo());
+        }
 
         return mapper.convertValue(saveTurno(newTurno), TurnoDTO.class);
     }
@@ -79,7 +88,7 @@ public class ITurnoServiceImpl implements ITurnoService {
     public String delete(Long id) throws ResourceNotFoundException {
         Optional<Turno> response = Optional.of(turnoRepository.getById(id));
 
-        if (response.isEmpty()){
+        if (!response.isPresent()){
             throw new ResourceNotFoundException("No se puede eliminar. " + String.format(Messages.ERROR_NO_EXISTE, "turno", id));
         }
 
