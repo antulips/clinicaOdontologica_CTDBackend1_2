@@ -14,7 +14,6 @@ public class PacienteDTO {
     private String dni;
     private LocalDate fechaIngreso;
     private DomicilioDTO domicilio;
-    //private OdontologoDto odontologo;
 
     public PacienteDTO() {
     }
@@ -34,15 +33,12 @@ public class PacienteDTO {
 
     @Override
     public String toString() {
-        //TODO AGREGAR DOMICILIO
-        return "Paciente{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni='" + dni + '\'' +
-                ", fechaIngreso=" + fechaIngreso +
-                //", domicilio=" + domicilio.toString() +
-                //", Odontólogo=" + odontologo.toString() +
-                '}';
+        return "Paciente:" +
+                "\n\tid: '" + id + "'" +
+                "\n\tD.U.: '" + dni + "'" +
+                "\n\tNombre: '" + nombre + "'" +
+                "\n\tApellido: '" + apellido + "'" +
+                "\n\tFecha de Ingreso: '" + fechaIngreso + "'" +
+                "\n\tDomicilio: '" + domicilio.toString() + "' \n";
     }
 }

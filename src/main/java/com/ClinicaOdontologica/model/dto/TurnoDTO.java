@@ -14,4 +14,13 @@ public class TurnoDTO {
     private PacienteDTO paciente;
     private OdontologoDTO odontologo;
 
+    @Override
+    public String toString() {
+        return "Turno:" +
+                "\n\tid: '" + id + "'" +
+                "\n\tFecha: '" + fecha + "'" +
+                "\n\tHora: '" + hora + "'" +
+                "\n\tOdontólogo: '" + odontologo.toString() + "'" +
+                "\n\tPaciente: '" + paciente.toString() + "' \n";
+    }
 }
