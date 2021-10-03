@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
+@Table(name="users")
 public class User implements UserDetails {
 
     @Id
@@ -21,20 +22,20 @@ public class User implements UserDetails {
     private String email;
     private String Password;
     @Enumerated(EnumType.STRING)
-    private UserRoles userRoles;
+    private UserRole userRole;
 
     public User() {
 
     }
 
     //constructor sin id
-    public User(String name, String lastname, String username, String email, String password, UserRoles userRoles) {
+    public User(String name, String lastname, String username, String email, String password, UserRole userRole) {
         this.name = name;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         Password = password;
-        this.userRoles = userRoles;
+        this.userRole = userRole;
     }
 
     public Long getId() {
@@ -95,7 +96,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRoles.name());
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(grantedAuthority);
     }
 
@@ -107,11 +108,11 @@ public class User implements UserDetails {
         Password = password;
     }
 
-    public UserRoles getAppUsuarioRoles() {
-        return userRoles;
+    public UserRole getAppUsuarioRoles() {
+        return userRole;
     }
 
-    public void setAppUsuarioRoles(UserRoles userRoles) {
-        this.userRoles = userRoles;
+    public void setAppUsuarioRoles(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

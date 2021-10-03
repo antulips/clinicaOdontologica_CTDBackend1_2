@@ -5,7 +5,7 @@ import com.ClinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.OdontologoDTO;
 import com.ClinicaOdontologica.service.IOdontologoService;
-import com.ClinicaOdontologica.service.impl.IOdontologoServiceImpl;
+import com.ClinicaOdontologica.service.impl.OdontologoServiceImpl;
 import com.ClinicaOdontologica.util.Messages;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,9 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> response = odontologoService.readById(id);
 
-        logger.info("Se encontró el odontólogo:\n" + response.get());
+        if (response.isPresent()){
+            logger.info("Se encontró el odontólogo:\n" + response.get());
+        }
 
         return ResponseEntity.ok(response.get());
     }
@@ -56,7 +58,9 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> response = Optional.ofNullable(odontologoService.update(odontologo));
 
-        logger.info("Se actualizó el odontólogo:\n" + response.get().getId());
+        if (response.isPresent()){
+            logger.info("Se actualizó el odontólogo:\n" + response.get().getId());
+        }
 
         return ResponseEntity.ok(response.get());
 
@@ -69,8 +73,9 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
         Optional<OdontologoDTO> response = odontologoService.readById(id);
 
-        logger.info("Se eliminó el odontólogo:\n" + response.get());
-
+        if (response.isPresent()){
+            logger.info("Se eliminó el odontólogo:\n" + response.get());
+        }
         return ResponseEntity.ok(odontologoService.delete(id));
     }
 
@@ -88,7 +93,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
 
     @GetMapping("/search/{lastname}")
     public Set<OdontologoDTO> listOdontologos(@RequestParam String lastname){
-        return ((IOdontologoServiceImpl)odontologoService).getOdontologoByLastNameLike(lastname);
+        return ((OdontologoServiceImpl)odontologoService).getOdontologoByLastNameLike(lastname);
     }
 
 }

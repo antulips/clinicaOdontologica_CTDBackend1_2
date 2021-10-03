@@ -4,7 +4,7 @@ import com.ClinicaOdontologica.controller.ICRUDController;
 import com.ClinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.PacienteDTO;
-import com.ClinicaOdontologica.service.impl.IPacienteServiceImpl;
+import com.ClinicaOdontologica.service.impl.PacienteServiceImpl;
 
 import com.ClinicaOdontologica.util.Messages;
 import org.apache.log4j.Logger;
@@ -22,7 +22,7 @@ public class PacienteController implements ICRUDController<PacienteDTO> {
     private final static Logger logger = Logger.getLogger(PacienteController.class);
 
     @Autowired
-    private IPacienteServiceImpl pacienteService;
+    private PacienteServiceImpl pacienteService;
 
     @Override
     @PostMapping("/new")
@@ -43,7 +43,9 @@ public class PacienteController implements ICRUDController<PacienteDTO> {
 
         Optional<PacienteDTO> response = pacienteService.readById(id);
 
-        logger.info("Se encontró el paciente:\n" + response.get());
+        if (response.isPresent()) {
+            logger.info("Se encontró el paciente:\n" + response.get());
+        }
 
         return ResponseEntity.ok(response.get());
     }
@@ -55,7 +57,9 @@ public class PacienteController implements ICRUDController<PacienteDTO> {
 
         Optional<PacienteDTO> response = Optional.ofNullable(pacienteService.update(paciente));
 
-        logger.info("Se actualizó el paciente:\n" + response.get().getId());
+        if (response.isPresent()) {
+            logger.info("Se actualizó el paciente:\n" + response.get().getId());
+        }
 
         return ResponseEntity.ok(response.get());
     }
@@ -67,7 +71,9 @@ public class PacienteController implements ICRUDController<PacienteDTO> {
 
         Optional<PacienteDTO> response = pacienteService.readById(id);
 
-        logger.info("Se eliminó el paciente:\n" + response.get().getId());
+        if (response.isPresent()) {
+            logger.info("Se eliminó el paciente:\n" + response.get().getId());
+        }
 
         return ResponseEntity.ok(pacienteService.delete(id));
 

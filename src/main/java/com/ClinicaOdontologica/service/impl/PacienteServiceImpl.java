@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-public class IPacienteServiceImpl implements IPacienteService {
+public class PacienteServiceImpl implements IPacienteService {
 
     @Autowired
     private IPacienteRepository pacienteRepository;
@@ -80,7 +80,6 @@ public class IPacienteServiceImpl implements IPacienteService {
         if (response.isEmpty()){
             throw new ResourceNotFoundException("No se puede eliminar. " + String.format(Messages.ERROR_NO_EXISTE, "paciente", id));
         }
-
         pacienteRepository.deleteById(id);
         return ("El siguiente paciente fue eliminado con éxito:\n" + mapper.convertValue(response.get(), PacienteDTO.class).toString());
     }

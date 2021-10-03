@@ -16,15 +16,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ITurnoServiceImpl implements ITurnoService {
+public class TurnoServiceImpl implements ITurnoService {
 
     @Autowired
     private ITurnoRepository turnoRepository;
 
     @Autowired
-    private IPacienteServiceImpl pacienteService;
+    private PacienteServiceImpl pacienteService;
 
-    @Autowired IOdontologoServiceImpl odontologoService;
+    @Autowired
+    OdontologoServiceImpl odontologoService;
 
     @Autowired
     ObjectMapper mapper;
@@ -90,7 +91,7 @@ public class ITurnoServiceImpl implements ITurnoService {
     public String delete(Long id) throws ResourceNotFoundException {
         Optional<Turno> response = Optional.of(turnoRepository.getById(id));
 
-        if (!response.isPresent()){
+        if (response.isEmpty()){
             throw new ResourceNotFoundException("No se puede eliminar. " + String.format(Messages.ERROR_NO_EXISTE, "turno", id));
         }
 

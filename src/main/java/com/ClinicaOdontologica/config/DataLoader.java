@@ -1,8 +1,8 @@
 package com.ClinicaOdontologica.config;
 
 import com.ClinicaOdontologica.persistence.entities.login.User;
-import com.ClinicaOdontologica.persistence.entities.login.UserRoles;
-import com.ClinicaOdontologica.persistence.repository.login.UserRepository;
+import com.ClinicaOdontologica.persistence.entities.login.UserRole;
+import com.ClinicaOdontologica.persistence.repository.login.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements ApplicationRunner {
 
-    private UserRepository userRepository;
+    private IUserRepository IUserRepository;
 
     @Autowired
-    public DataLoader(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public DataLoader(IUserRepository IUserRepository) {
+        this.IUserRepository = IUserRepository;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class DataLoader implements ApplicationRunner {
         String password = passwordEncoder.encode("password");
         String password2 = passwordEncoder.encode("password2");
 
-        userRepository.save(new User("admin", "admin", "admin", "admin@gmail.com", password2, UserRoles.ADMIN));
-        userRepository.save(new User("user", "user", "user", "user@gmail.com", password, UserRoles.USER));
+        IUserRepository.save(new User("admin", "admin", "admin", "admin@gmail.com", password2, UserRole.ROLE_ADMIN));
+        IUserRepository.save(new User("user", "user", "user", "user@gmail.com", password, UserRole.ROLE_USER));
     }
 }

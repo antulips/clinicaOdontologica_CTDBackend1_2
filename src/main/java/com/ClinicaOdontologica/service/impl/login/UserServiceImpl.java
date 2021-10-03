@@ -2,7 +2,7 @@ package com.ClinicaOdontologica.service.impl.login;
 
 import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.persistence.entities.login.User;
-import com.ClinicaOdontologica.persistence.repository.login.UserRepository;
+import com.ClinicaOdontologica.persistence.repository.login.IUserRepository;
 import com.ClinicaOdontologica.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,16 +12,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
-public class UserService implements UserDetailsService {
+@Transactional
+public class UserServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final IUserRepository IUserRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(IUserRepository IUserRepository) {
+        this.IUserRepository = IUserRepository;
     }
 
     public User create(User user) throws ServiceException {
@@ -29,18 +31,18 @@ public class UserService implements UserDetailsService {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPass = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashedPass);
-            return userRepository.save(user);
+            return IUserRepository.save(user);
         } else {
             throw new ServiceException(String.format(Messages.ERROR_AL_CREAR, "usuario"));
         }
     }
 
     public Collection<User> getAll(){
-        return userRepository.findAll();
+        return IUserRepository.findAll();
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow((() -> new UsernameNotFoundException(String.format(Messages.ERROR_AL_CREAR ))));
+        return IUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(Messages.ERROR_AL_CREAR ));
     }
 }

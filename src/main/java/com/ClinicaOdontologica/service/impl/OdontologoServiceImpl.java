@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class IOdontologoServiceImpl implements IOdontologoService {
+public class OdontologoServiceImpl implements IOdontologoService {
 
     @Autowired
     private IOdontologoRepository odontologoRepository;

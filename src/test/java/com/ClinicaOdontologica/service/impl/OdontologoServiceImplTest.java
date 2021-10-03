@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
-public class IOdontologoServiceImplTest {
+public class OdontologoServiceImplTest {
 
     @Autowired
     private IOdontologoService odontologoService;

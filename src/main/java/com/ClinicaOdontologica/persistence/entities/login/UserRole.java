@@ -1,5 +1,5 @@
 package com.ClinicaOdontologica.persistence.entities.login;
 
-public enum UserRoles {
-    USER, ADMIN
+public enum UserRole {
+    ROLE_USER, ROLE_ADMIN
 }
