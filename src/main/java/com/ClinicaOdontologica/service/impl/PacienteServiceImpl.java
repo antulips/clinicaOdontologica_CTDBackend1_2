@@ -11,10 +11,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@Transactional
 public class PacienteServiceImpl implements IPacienteService {
 
     @Autowired
@@ -80,7 +82,9 @@ public class PacienteServiceImpl implements IPacienteService {
         if (response.isEmpty()){
             throw new ResourceNotFoundException("No se puede eliminar. " + String.format(Messages.ERROR_NO_EXISTE, "paciente", id));
         }
+
         pacienteRepository.deleteById(id);
+
         return ("El siguiente paciente fue eliminado con éxito:\n" + mapper.convertValue(response.get(), PacienteDTO.class).toString());
     }
 

@@ -26,7 +26,7 @@ public class Paciente {
     @JoinColumn(name = "id_domicilio", referencedColumnName = "id")
     private Domicilio domicilio;
 
-    @OneToMany(mappedBy = "paciente")
+    @OneToMany(mappedBy = "paciente", fetch=FetchType.EAGER)
     @JsonIgnore
     private Set<Turno> turnos;
 

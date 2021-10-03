@@ -23,29 +23,29 @@ public class OdontologoServiceImplTest {
     @Autowired
     private IOdontologoService odontologoService;
 
-    OdontologoDTO o;
-    OdontologoDTO o2;
-    OdontologoDTO o3;
+    OdontologoDTO dummyOd;
+    OdontologoDTO dummyOd2;
+    OdontologoDTO dummyOd3;
 
     @BeforeEach
     public void cargarDatos() throws ServiceException, ResourceNotFoundException {
-        o = new OdontologoDTO();
-        o.setApellido("Tester");
-        o.setNombre("Doctor o");
-        o.setMatricula("FKH ");
+        dummyOd = new OdontologoDTO();
+        dummyOd.setApellido("Tester");
+        dummyOd.setNombre("Doctor o");
+        dummyOd.setMatricula("FKH ");
 
-        o2 = new OdontologoDTO();
-        o2.setApellido("Retester");
-        o2.setNombre("Doctor 2");
-        o2.setMatricula("FIU 6548/7");
-        o2.setId(odontologoService.create(o2).getId());
+        dummyOd2 = new OdontologoDTO();
+        dummyOd2.setApellido("Retester");
+        dummyOd2.setNombre("Doctor 2");
+        dummyOd2.setMatricula("FIU 6548/7");
+        dummyOd2.setId(odontologoService.create(dummyOd2).getId());
 
-        o3 = new OdontologoDTO();
-        o3.setApellido("Testeo");
-        o3.setNombre("Doctor Cito");
-        o3.setMatricula("HOW 7841/1");
-        odontologoService.create(o3);
-        o3.setId(odontologoService.create(o3).getId());
+        dummyOd3 = new OdontologoDTO();
+        dummyOd3.setApellido("Testeo");
+        dummyOd3.setNombre("Doctor Cito");
+        dummyOd3.setMatricula("HOW 7841/1");
+        odontologoService.create(dummyOd3);
+        dummyOd3.setId(odontologoService.create(dummyOd3).getId());
     }
 
     @Test
@@ -53,10 +53,10 @@ public class OdontologoServiceImplTest {
         //DADO>@BeforeAll
 
         //CUANDO
-        Object creado = odontologoService.create(o);
+        Object creado = odontologoService.create(dummyOd);
 
         //ENTONCES
-        assertEquals(creado, o);
+        assertEquals(creado, dummyOd);
     }
 
     @Test
@@ -73,38 +73,38 @@ public class OdontologoServiceImplTest {
         //DADO>@BeforeAll
 
         //CUANDO
-        OdontologoDTO respuesta = odontologoService.readById(o2.getId()).get();
+        OdontologoDTO respuesta = odontologoService.readById(dummyOd2.getId()).get();
 
         //ENTONCES
-        assertEquals(respuesta, o2);
+        assertEquals(respuesta, dummyOd2);
     }
 
     @Test
     public void test04DebeActualizarElOdontologo() throws ServiceException, ResourceNotFoundException {
         //DADO
-        o2.setNombre("Doc Doc");
+        dummyOd2.setNombre("Doc Doc");
 
         //CUANDO
-        odontologoService.update(o2);
-        Object respuesta = odontologoService.readById(o2.getId());
+        odontologoService.update(dummyOd2);
+        Object respuesta = odontologoService.readById(dummyOd2.getId());
 
         //ENTONCES
-        assertEquals(o2.getNombre(), "Doc Doc");
+        assertEquals(dummyOd2.getNombre(), "Doc Doc");
     }
 
     @Test
     public void test05NoDebeActualizarElOdontologoSinId() throws ServiceException, ResourceNotFoundException {
         //DADO
-        o.setNombre("Doc Doc");
+        dummyOd.setNombre("Doc Doc");
 
         //ENTONCES > CUANDO
-        assertThrows(ServiceException.class, () -> odontologoService.update(o));
+        assertThrows(ServiceException.class, () -> odontologoService.update(dummyOd));
     }
 
     @Test
     public void test06DebeEliminarOdontologoPorId() throws ResourceNotFoundException {
         //DADO
-        Long idOdontologoParaBorrar = odontologoService.readById(o3.getId()).get().getId();
+        Long idOdontologoParaBorrar = odontologoService.readById(dummyOd3.getId()).get().getId();
 
         //CUANDO
         odontologoService.delete(idOdontologoParaBorrar);
@@ -123,7 +123,6 @@ public class OdontologoServiceImplTest {
         //ENTONCES
         //assertFalse(odontologos.isEmpty());
         assertEquals(4, odontologos.size());
-
     }
 
 }
