@@ -30,7 +30,7 @@ public class PacienteServiceImplTest {
     DomicilioDTO domicilioGenerico;
 
     @BeforeEach
-    public void cargarDatados() throws ServiceException, ResourceNotFoundException {
+    public void cargarDatos() throws ServiceException, ResourceNotFoundException {
         domicilioGenerico = new DomicilioDTO();
         domicilioGenerico.setCalle("Sin Fin");
         domicilioGenerico.setNumero("S/N");
@@ -54,7 +54,7 @@ public class PacienteServiceImplTest {
 
     @Test
     public void test01DebeCrearElPaciente() throws ServiceException, ResourceNotFoundException {
-        //DADO>@BeforeAll
+        //DADO>@BeforeEach
 
         //CUANDO
         PacienteDTO creado = pacienteService.create(dummyPac);
@@ -75,7 +75,7 @@ public class PacienteServiceImplTest {
 
     @Test
     public void test03DebeTraerElPacienteBuscado() throws ServiceException, ResourceNotFoundException {
-        //DADO>@BeforeAll
+        //DADO>@BeforeEach
 
         //CUANDO
         PacienteDTO respuesta = pacienteService.readById(dummyPac2.getId()).get();
@@ -127,7 +127,7 @@ public class PacienteServiceImplTest {
 
     @Test
     public void test07DebeTraerTodosLosPacientes() {
-        //DADO>@BeforeAll
+        //DADO>@BeforeEach
 
         //CUANDO
         Collection<PacienteDTO> pacientes = pacienteService.getAll();
