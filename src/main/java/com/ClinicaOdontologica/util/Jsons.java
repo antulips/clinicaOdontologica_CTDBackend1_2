@@ -1,3 +1,5 @@
+package com.ClinicaOdontologica.util;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -8,7 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 
-public  class Jsons {
+public class Jsons {
 
     public static String asJsonString(Object object){
         try{
@@ -19,7 +21,6 @@ public  class Jsons {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 
     public static  <T> T objectFromString(Class<T> aClass, String value) throws JsonProcessingException {

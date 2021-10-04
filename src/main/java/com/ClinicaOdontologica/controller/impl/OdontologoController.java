@@ -7,6 +7,9 @@ import com.ClinicaOdontologica.model.dto.OdontologoDTO;
 import com.ClinicaOdontologica.service.IOdontologoService;
 import com.ClinicaOdontologica.service.impl.OdontologoServiceImpl;
 import com.ClinicaOdontologica.util.Messages;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,11 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     private IOdontologoService odontologoService;
 
     @Override
+    @ApiOperation(value = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = ""),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
     @PostMapping("/new")
     public ResponseEntity<?> create(@RequestBody OdontologoDTO newOdondologo) throws ServiceException, ResourceNotFoundException {
         logger.info("Ingresando el siguiente odontólogo a la base de datos: \n" + newOdondologo.toString());
@@ -76,6 +84,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
         if (response.isPresent()){
             logger.info("Se eliminó el odontólogo:\n" + response.get());
         }
+
         return ResponseEntity.ok(odontologoService.delete(id));
     }
 
