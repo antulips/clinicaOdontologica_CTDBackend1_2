@@ -6,6 +6,7 @@ import com.ClinicaOdontologica.exceptions.ServiceException;
 import com.ClinicaOdontologica.model.dto.TurnoDTO;
 import com.ClinicaOdontologica.service.ITurnoService;
 import com.ClinicaOdontologica.util.Messages;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
     private ITurnoService turnoService;
 
     @Override
+    @ApiOperation(value = "ESP: Ingresa un nuevo Turno en la base de datos.\nEN: Creates a new Turno in the database.")
     @PostMapping("/new")
     public ResponseEntity<?> create(@RequestBody TurnoDTO newTurno) throws ServiceException, ResourceNotFoundException {
         logger.info("Ingresando el siguiente turno a la base de datos: \n" + newTurno.toString());
@@ -37,6 +39,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Obtiene un Turno, con Paciente y Odontologo, por id.\nEN: Returns a Turno with Paciente and Odontologo by id.")
     @GetMapping("/{id}")
     public ResponseEntity<?> readById(@PathVariable Long id) throws ResourceNotFoundException {
         logger.info("Buscando en la base de datos el turno con el id: " + id);
@@ -49,6 +52,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Actualiza por id un Turno registrado.\nEN: Updates a Turno by id.")
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody TurnoDTO turno) throws ResourceNotFoundException, ServiceException {
         logger.info("Actualizando en la base de datos el turno con el id: " + turno.getId());
@@ -61,6 +65,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Elimina un Turno por id.\nEN: Deletes a Turno by id.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException {
         logger.info("Borrando de la base de datos el turno con el id: " + id);
@@ -73,6 +78,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Obtiene todos los Turnos registrados.\nEN: Gets all Turnos from the database.")
     @GetMapping("/all")
     public ResponseEntity<?> getAll() {
         logger.info("Buscando todos los turnos de la base de datos.");
@@ -84,6 +90,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
         return ResponseEntity.ok(listaDeTurnos);
     }
 
+    @ApiOperation(value = "ESP: Obtiene los Turnos registrados durante los 7 días posteriores a la fecha ingresada.\nEN: Gets all Turnos in a week from the date given.")
     @GetMapping("/weekly")
     public ResponseEntity<?> getAllForAWeek(
             @RequestParam Integer day,
@@ -101,6 +108,7 @@ public class TurnoController implements ICRUDController<TurnoDTO> {
         return ResponseEntity.ok(listaDeTurnos);
     }
 
+    @ApiOperation(value = "ESP: Obtiene los Turnos registrados entre la fechas ingresadas.\nEN: Gets all Turnos the period in between the given dates.")
     @GetMapping("/period")
     public ResponseEntity<?> getAllFromTo(
             @RequestParam Integer dayFrom,

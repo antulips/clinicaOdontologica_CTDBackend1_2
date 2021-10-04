@@ -8,8 +8,6 @@ import com.ClinicaOdontologica.service.IOdontologoService;
 import com.ClinicaOdontologica.service.impl.OdontologoServiceImpl;
 import com.ClinicaOdontologica.util.Messages;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/odontologos")
@@ -29,11 +26,12 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     private IOdontologoService odontologoService;
 
     @Override
-    @ApiOperation(value = "")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = ""),
-            @ApiResponse(code = 400, message = "Bad Request")
-    })
+    @ApiOperation(value = "ESP: Ingresa un nuevo Odontologo en la base de datos.\nEN: Creates a new Odontologo in the database.")
+//    TODO: PERSONALIZAR DOCUMENTACIÓN SOBRE RESPUESTAS PARA CADA MÉTODO
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = ""),
+//            @ApiResponse(code = 400, message = "Bad Request")
+//    })
     @PostMapping("/new")
     public ResponseEntity<?> create(@RequestBody OdontologoDTO newOdondologo) throws ServiceException, ResourceNotFoundException {
         logger.info("Ingresando el siguiente odontólogo a la base de datos: \n" + newOdondologo.toString());
@@ -46,6 +44,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Obtiene por id un Odontologo registrado.\nEN: Gets an Odontologo by id.")
     @GetMapping("/{id}")
     public ResponseEntity<?> readById(@PathVariable Long id) throws ResourceNotFoundException {
         logger.info("Buscando en la base de datos el odontólogo con el id: " + id);
@@ -60,6 +59,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Actualiza por id un Odontologo registrado.\nEN: Updates an Odontologo by id.")
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody OdontologoDTO odontologo) throws ResourceNotFoundException, ServiceException {
         logger.info("Actualizando en la base de datos el odontólogo con el id: " + odontologo.getId());
@@ -75,6 +75,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Elimina un Odontólogo por id.\nEN: Deletes an Odontologo by id.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException {
         logger.info("Borrando de la base de datos el odontólogo con el id: " + id);
@@ -89,6 +90,7 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
     }
 
     @Override
+    @ApiOperation(value = "ESP: Obtiene todos los Odontologos registrados.\nEN: Gets all Odontologos from the database.")
     @GetMapping("/all")
     public ResponseEntity<Collection<OdontologoDTO>> getAll(){
         logger.info("Buscando todos los odontólogos de la base de datos.");
@@ -100,9 +102,16 @@ public class OdontologoController implements ICRUDController<OdontologoDTO> {
         return ResponseEntity.ok(listaDeOdontologos);
     }
 
+    @ApiOperation(value = "ESP: Obtiene todos los Odontologos por Apellido.\nEN: Gets all Odontologos by Lastname.")
     @GetMapping("/search/{lastname}")
-    public Set<OdontologoDTO> listOdontologos(@RequestParam String lastname){
-        return ((OdontologoServiceImpl)odontologoService).getOdontologoByLastNameLike(lastname);
+    public ResponseEntity<Collection<OdontologoDTO>> getAllByLastName(@RequestParam String lastname){
+        logger.info(String.format("Buscando todos los odontólogos con un apellido similar a %s.", lastname));
+
+        Collection<OdontologoDTO> listaDeOdontologos = ((OdontologoServiceImpl)odontologoService).getOdontologoByLastNameLike(lastname);
+
+        logger.info(String.format("Se encontraron %s odontólogos.", listaDeOdontologos.size()));
+
+        return ResponseEntity.ok(listaDeOdontologos);
     }
 
 }

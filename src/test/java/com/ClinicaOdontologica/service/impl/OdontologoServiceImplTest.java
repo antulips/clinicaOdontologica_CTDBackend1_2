@@ -41,7 +41,7 @@ public class OdontologoServiceImplTest {
         dummyOd2.setId(odontologoService.create(dummyOd2).getId());
 
         dummyOd3 = new OdontologoDTO();
-        dummyOd3.setApellido("Testeo");
+        dummyOd3.setApellido("Tester");
         dummyOd3.setNombre("Doctor Cito");
         dummyOd3.setMatricula("HOW 7841/1");
         odontologoService.create(dummyOd3);
@@ -121,8 +121,20 @@ public class OdontologoServiceImplTest {
         Collection<OdontologoDTO> odontologos = odontologoService.getAll();
 
         //ENTONCES
-        //assertFalse(odontologos.isEmpty());
+        assertFalse(odontologos.isEmpty());
         assertEquals(4, odontologos.size());
+    }
+
+    @Test
+    public void test07DebeTraerTodosLosOdontologosConUnApellidoSimilarA() {
+        //DADO>@BeforeAll
+        String lastnameLike = "Tester";
+
+        //CUANDO
+        Collection<OdontologoDTO> odontologos = ((OdontologoServiceImpl)odontologoService).getOdontologoByLastNameLike(lastnameLike);
+
+        //ENTONCES
+        assertEquals(2, odontologos.size());
     }
 
 }

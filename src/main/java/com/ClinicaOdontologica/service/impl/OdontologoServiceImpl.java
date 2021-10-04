@@ -87,6 +87,7 @@ public class OdontologoServiceImpl implements IOdontologoService {
         return odontologoRepository.save(newOdontologo);
     }
 
+    @Override
     public Set<OdontologoDTO> getOdontologoByLastNameLike(String lastname){
         Set<Odontologo> odontologoList = odontologoRepository.getOdontologoByLastNameLike(lastname);
 
